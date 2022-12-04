@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                                 return null;
                             });
         }
-
+///sssssssss
         fragment.setOnTapArPlaneListener(
                 (HitResult hitResult, Plane plane, MotionEvent motionEvent) -> {
                     int renderable_index = rand.nextInt(renderables.length); // exercise 1
@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
                     modelNode.setParent(anchorNode);
                     modelNode.setRenderable(modelRenderable);
                     modelNode.select(); // select the newly added object
-
+//sss
                 });
 
 

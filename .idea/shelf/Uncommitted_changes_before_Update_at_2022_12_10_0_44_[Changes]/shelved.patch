@@ -1,0 +1,22 @@
+Index: app/src/main/java/scm/yiwen4/molecue_go/MainActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package scm.yiwen4.molecue_go;\r\n\r\nimport androidx.appcompat.app.AppCompatActivity;\r\n\r\nimport android.os.Bundle;\r\nimport android.util.Log;\r\nimport android.view.MotionEvent;\r\n\r\nimport com.google.ar.core.Anchor;\r\nimport com.google.ar.core.HitResult;\r\nimport com.google.ar.core.Plane;\r\nimport com.google.ar.sceneform.AnchorNode;\r\nimport com.google.ar.sceneform.rendering.ModelRenderable;\r\nimport com.google.ar.sceneform.ux.ArFragment;\r\nimport com.google.ar.sceneform.ux.TransformableNode;\r\n\r\nimport java.util.Random;\r\n\r\npublic class MainActivity extends AppCompatActivity {\r\n    private ArFragment fragment;\r\n    private ModelRenderable modelRenderable;\r\n    private int[] models = {R.raw.connector,R.raw.hydrogen,R.raw.oxygen};\r\n    private Random rand = new Random();\r\n    private ModelRenderable[] renderables = new ModelRenderable[models.length];\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.activity_main);\r\n        fragment = (ArFragment)\r\n                getSupportFragmentManager().findFragmentById(R.id.sceneform_fragment);\r\n        ModelRenderable.builder()\r\n                .setSource(this, R.raw.hydrogen)\r\n                .setIsFilamentGltf(true)\r\n                .build()\r\n                .thenAccept(renderable -> modelRenderable = renderable)\r\n                .exceptionally(\r\n                        throwable -> {\r\n                            Log.e(\"HelloARCore\", \"Unable to load Renderable.\", throwable);\r\n                            return null;\r\n                        });\r\n        for (int index = 0; index < renderables.length; index++) {\r\n            int finalIndex = index;\r\n            ModelRenderable.builder()\r\n                    .setSource(this, models[finalIndex]) // exercise 1\r\n                    .setIsFilamentGltf(true)\r\n                    .build()\r\n                    .thenAccept(renderable -> renderables[finalIndex] = renderable)\r\n                    .exceptionally(\r\n                            throwable -> {\r\n                                Log.e(\"HelloARCore\", \"Unable to load Renderable.\", throwable);\r\n                                return null;\r\n                            });\r\n        }\r\n\r\n        fragment.setOnTapArPlaneListener(\r\n                (HitResult hitResult, Plane plane, MotionEvent motionEvent) -> {\r\n                    int renderable_index = rand.nextInt(renderables.length); // exercise 1\r\n                    if (renderables[renderable_index] == null) {\r\n                        return;\r\n                    }\r\n                    // Create an anchor.\r\n                    Anchor anchor = hitResult.createAnchor();\r\n                    AnchorNode anchorNode = new AnchorNode(anchor);\r\n                    anchorNode.setParent(fragment.getArSceneView().getScene());\r\n                    TransformableNode modelNode = new TransformableNode(fragment.getTransformationSystem());\r\n                    modelNode.setParent(anchorNode);\r\n                    modelNode.setRenderable(modelRenderable);\r\n                    modelNode.select(); // select the newly added object\r\n\r\n                });\r\n\r\n\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/scm/yiwen4/molecue_go/MainActivity.java b/app/src/main/java/scm/yiwen4/molecue_go/MainActivity.java
+--- a/app/src/main/java/scm/yiwen4/molecue_go/MainActivity.java	(revision 6142538ec79bd9273391e83af923fff507e7e5f1)
++++ b/app/src/main/java/scm/yiwen4/molecue_go/MainActivity.java	(date 1670604240775)
+@@ -51,7 +51,11 @@
+                                 return null;
+                             });
+         }
++<<<<<<< HEAD
+ 
++=======
++///sssssssss
++>>>>>>> 4c1aee7 (molecue_go2)
+         fragment.setOnTapArPlaneListener(
+                 (HitResult hitResult, Plane plane, MotionEvent motionEvent) -> {
+                     int renderable_index = rand.nextInt(renderables.length); // exercise 1
